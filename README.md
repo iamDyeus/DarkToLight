@@ -4,6 +4,10 @@
 
 DarkToLight is a Python tool that transforms dark mode code screenshots into clean, light mode versions by inverting their colors. Say goodbye to straining your eyes or mismatched themes—convert your dark code outputs to bright, readable visuals with ease.
 
+![Frame](https://github.com/user-attachments/assets/afdbb89e-f56a-4dc7-82a5-62c70e5adb66)
+
+
+
 ## Project Structure
 
 ```
