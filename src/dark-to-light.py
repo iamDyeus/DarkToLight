@@ -32,18 +32,32 @@ def process_directory(directory, verbose, dry_run):
         print(f"Total images processed: {image_count}")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Invert colors of all images in a directory recursively.")
-    parser.add_argument("directory", type=str, help="Path to the directory containing images.")
+    parser = argparse.ArgumentParser(description="Invert colors of all images in a directory or a single image file.")
+    parser.add_argument("path", type=str, help="Path to the directory or image file.")
     parser.add_argument("--verbose", action="store_true", help="Enable verbose output.")
     parser.add_argument("--dry-run", action="store_true", help="Perform a dry run without making any changes.")
     args = parser.parse_args()
 
-    if os.path.isdir(args.directory):
-        print(f"Processing directory: {args.directory}")
-        process_directory(args.directory, args.verbose, args.dry_run)
+    if os.path.isdir(args.path):
+        print(f"Processing directory: {args.path}")
+        process_directory(args.path, args.verbose, args.dry_run)
         if not args.dry_run:
             print("✅ All images have been processed!")
         else:
             print("✅ Dry run completed!")
+    elif os.path.isfile(args.path):
+        if args.path.lower().endswith((".png", ".jpg", ".jpeg", ".bmp", ".gif")):
+            print(f"Processing file: {args.path}")
+            if args.dry_run:
+                if args.verbose:
+                    print(f"Would invert: {args.path}")
+            else:
+                invert_image_colors(args.path, args.verbose)
+            if not args.dry_run:
+                print("✅ Image has been processed!")
+            else:
+                print("✅ Dry run completed!")
+        else:
+            print("❌ Error: File is not a supported image format.")
     else:
-        print("❌ Error: Directory does not exist.")
+        print("❌ Error: Path does not exist.")
